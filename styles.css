@@ -1,0 +1,186 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e9eef2;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.slideshow-container {
+  max-width: 450px;
+  position: relative;
+  margin: auto;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-height: 98vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  text-align: center;
+  color: #1a4d8c;
+  font-size: 1.2em;
+  margin: 0 0 15px 0;
+  padding: 5px 0;
+  border-bottom: 2px solid #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Image Area and Navigation Positioning */
+.image-wrapper {
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+}
+
+#product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* Added transition for smoother image appearance */
+  transition: opacity 0.3s;
+}
+
+/* --- Loading Spinner Styles --- */
+
+/* Initially hide the spinner */
+.spinner {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #1a4d8c; /* Color of the spinner */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Class applied by JS when the image is loading */
+.loading #product-image {
+  visibility: hidden; /* Hide the old image */
+  opacity: 0;
+}
+.loading .spinner {
+  display: block; /* Show the spinner */
+}
+
+/* --- Navigation Buttons --- */
+.nav-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: rgba(26, 77, 140, 0.7);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.3s;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-btn:hover {
+  background-color: rgba(26, 77, 140, 0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.next {
+  right: 10px;
+}
+.prev {
+  left: 10px;
+}
+
+/* --- Form Styles --- */
+#product-info-form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+  text-align: left;
+}
+label {
+  display: block;
+  margin-bottom: 3px;
+  font-weight: bold;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #c0c0c0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #1a4d8c;
+  outline: none;
+  box-shadow: 0 0 3px rgba(26, 77, 140, 0.5);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+#not-available {
+  width: auto;
+  margin: 0;
+  transform: scale(1.1);
+  accent-color: #1a4d8c;
+}
+
+#slide-index {
+  color: #777;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: center;
+}
+.status-message {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 0.9em;
+  height: 15px;
+}

@@ -12,6 +12,7 @@ const slideIndexEl = document.getElementById("slide-index");
 const statusMessageEl = document.getElementById("status-message");
 const prevBtn = document.getElementById("prev-btn");
 const nextBtn = document.getElementById("next-btn");
+const copyBtn = document.getElementById("copy-btn"); // New: Copy Button
 
 const allInputs = [productPriceEl, notAvailableEl, additionalNoteEl];
 
@@ -150,6 +151,61 @@ function navigateSlide(n) {
   showSlide(slideIndex);
 }
 
+// --- NEW FEATURE FUNCTIONS ---
+
+/**
+ * Formats the entire productData array into a human-readable text block for sharing.
+ * @returns {string} The formatted text.
+ */
+function formatProductDataForSharing() {
+  const formattedData = productData
+    .map((product, index) => {
+      // Use index + 1 for user-friendly numbering
+      let line = `${index + 1}. ${product.title}`;
+
+      if (product.isAvailable) {
+        const price =
+          product.price !== null ? `${product.price.toFixed(0)} PKR` : "N/A";
+        line += `\n   - Price: ${price}`;
+      } else {
+        line += "\n   - Status: *Not Available*";
+      }
+
+      if (product.note) {
+        line += `\n   - Note: ${product.note}`;
+      }
+      return line;
+    })
+    .join("\n---\n"); // Separator between products
+
+  return "--- PRODUCT LIST ---\n\n" + formattedData + "\n\n--- END ---";
+}
+
+/**
+ * Copies the formatted product data to the clipboard and shows an alert.
+ */
+async function copyDataToClipboard() {
+  // Ensure the current product data is saved before copying the whole list
+  updateProductData(false); 
+
+  const dataToCopy = formatProductDataForSharing();
+
+  try {
+    await navigator.clipboard.writeText(dataToCopy);
+    
+    // Show status on the page
+    displayStatusMessage("Product list copied to clipboard!", 3000);
+    
+    // Show a native browser alert as requested
+    alert("Data copied to clipboard and ready to share on WhatsApp!");
+  } catch (err) {
+    console.error("Failed to copy data: ", err);
+    displayStatusMessage("Error: Could not copy data to clipboard.", 4000);
+    alert("Error: Could not copy data to clipboard.");
+  }
+}
+
+
 // --- Status Message Functions ---
 
 function displayStatusMessage(message, duration = 3000) {
@@ -166,6 +222,7 @@ function clearStatusMessage() {
 
 prevBtn.addEventListener("click", () => navigateSlide(-1));
 nextBtn.addEventListener("click", () => navigateSlide(1));
+copyBtn.addEventListener("click", copyDataToClipboard); // New: Listener for copy button
 
 allInputs.forEach((input) => {
   input.addEventListener("input", () => {
